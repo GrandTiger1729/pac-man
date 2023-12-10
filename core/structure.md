@@ -1,29 +1,51 @@
 # Class Dependency
 
 
+## Utility
+
+```mermaid
+classDiagram
+    class Position {
+        -int _x
+        -int _y
+
+        +get_x() int
+        +set_x() int
+        +get_y() int
+        +set_y() int
+    }
+```
+
 ## Agent
 
 ```mermaid
 classDiagram
 
-    class Agent {
-        -_x
-        -_y
+    class Face {
+        UP
+        DOWN
+        LEFT
+        RIGHT
+    }
+    <<Enumeration>> Face
 
-        +get_x()
-        +set_x()
-        +get_y()
-        +set_y()
+    class Agent {
+        -Position postion;
+        -Face current_face
         
-        +move(int original_x, int original_y, int destination_x, int destination_y)
-        +move_to(int x, int y)
+        +get_position() Position
+        +set_position() Position
+        +get_face() Face
+
+        +move(Position original_postion, Position desination_postion) None
+        +move_to(Position position) None
     }
 
     class BasePacMan {
 
     }
     class BaseGhost {
-        +generate_move(int pacman_x, int pacman_y)*
+        +generate_move(List~Position~ pacman_positions)*
     }
 
     Agent <|-- BasePacMan
@@ -43,7 +65,7 @@ classDiagram
 
     }
     class PacManAI {
-        +generate_move(int pacman_x, int pacman_y)
+        +generate_move(List~Position~ ghost_positions)
     }
 
     BasePacMan <|-- PacManUser
@@ -56,22 +78,21 @@ classDiagram
 classDiagram
 
     class BaseGhost {
-        +generate_move(int pacman_x, int pacman_y)*
+        +generate_move(List~Position~ pacman_positions)*
     }
 
     class Blinky {
-        +generate_move(int pacman_x, int pacman_y)
+        +generate_move(List~Position~ pacman_positions)
     }
     class Inky {
-        +generate_move(int pacman_x, int pacman_y)
+        +generate_move(List~Position~ pacman_positions)
     }
     class Pinky {
-        +generate_move(int pacman_x, int pacman_y)
+        +generate_move(List~Position~ pacman_positions)
     }
     class Clyde {
-        +generate_move(int pacman_x, int pacman_y)
+        +generate_move(List~Position~ pacman_positions)
     }
-    
     
     BaseGhost <|-- Blinky
     BaseGhost <|-- Inky
@@ -91,12 +112,9 @@ classDiagram
         DOT
         BIGDOT
         WALL
-        PACMAN_USER
-        PACMAN_AI
-        BLINKY
-        INKY
-        PINKY
-        CLYDE
+    }
+    class Fruit {
+
     }
     <<Enumeration>> Square
     
@@ -110,8 +128,20 @@ classDiagram
 
         -List~List~Square~~ field
         -Event current_event
-    
-        update() None
+        -int live_count
+        
+        -PacManUser pacman_user
+        -PacManAI pacman_ai
+        -Blinky blinky
+        -Inky inky
+        -Pinky pinky
+        -Clyde clyde
+
+        -List~Fruit~ fruits
+        
+        -check_collision() bool
+        +update() None
+        +isGameOver() bool
     }
 
 ```
