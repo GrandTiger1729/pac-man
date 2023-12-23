@@ -29,12 +29,19 @@ classDiagram
     }
     <<Enumeration>> Face
 
+    class Direction {
+        UP
+        DOWN
+        LEFT
+        RIGHT
+    }
+    <<Enumeration>> Direction
+
     class Agent {
         -Position postion;
-        -Face current_face
+        -Face face
         
         +get_position() Position
-        +set_position() Position
         +get_face() Face
 
         +move(Position original_postion, Position desination_postion) None
@@ -45,7 +52,7 @@ classDiagram
 
     }
     class BaseGhost {
-        +generate_move(List~Position~ pacman_positions)*
+        +generate_move(List~Position~ pacman_positions)* Direction
     }
 
     Agent <|-- BasePacMan
@@ -65,7 +72,7 @@ classDiagram
 
     }
     class PacManAI {
-        +generate_move(List~Position~ ghost_positions)
+        +generate_move(List~Position~ ghost_positions) Direction
     }
 
     BasePacMan <|-- PacManUser
@@ -82,16 +89,16 @@ classDiagram
     }
 
     class Blinky {
-        +generate_move(List~Position~ pacman_positions)
+        +generate_move(List~Position~ pacman_positions) Direction
     }
     class Inky {
-        +generate_move(List~Position~ pacman_positions)
+        +generate_move(List~Position~ pacman_positions) Direction
     }
     class Pinky {
-        +generate_move(List~Position~ pacman_positions)
+        +generate_move(List~Position~ pacman_positions) Direction
     }
     class Clyde {
-        +generate_move(List~Position~ pacman_positions)
+        +generate_move(List~Position~ pacman_positions) Direction
     }
     
     BaseGhost <|-- Blinky
@@ -120,7 +127,7 @@ classDiagram
     
     class Event {
         NORMAL
-        REVERSE
+        REVERSED
     }
     <<Enumeration>> Event
 
@@ -129,6 +136,8 @@ classDiagram
         -List~List~Square~~ field
         -Event current_event
         -int live_count
+        -List~Fruit~ fruits
+        -int score
         
         -PacManUser pacman_user
         -PacManAI pacman_ai
@@ -137,11 +146,11 @@ classDiagram
         -Pinky pinky
         -Clyde clyde
 
-        -List~Fruit~ fruits
-        
-        -check_collision() bool
+
+        -check_collisions() bool
+        +reset() None
         +update() None
-        +isGameOver() bool
+        +is_gameover() bool
     }
 
 ```

@@ -1,17 +1,24 @@
-import pygame
+from typing import *
+from enum import *
 
-class PacMan(pygame.sprite.Sprite):
-    """The pac-man
-    """
+from .config import *
+from .agent import *
 
-    def __init__(self):
-        super().__init__()
-        self.surface = pygame.image.load("assets/pac-man.png").convert()
-        self.surface.set_colorkey((255, 255, 255), pygame.RLEACCEL)
-        self.rect = self.surface.get_rect()
+class BasePacMan(Agent):
+    pass
 
-    
+class PacManUser(BasePacMan):
 
+    def __init__(self) -> None:
 
+        super().__init__(Position(0, 0))
 
-    
+class PacManAI(BasePacMan):
+
+    def __init__(self) -> None:
+
+        super().__init__(Position(0, 0))
+
+    def generate_move(ghost_positions: List[Position]) -> Direction:
+
+        pass
