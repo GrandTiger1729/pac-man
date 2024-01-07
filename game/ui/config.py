@@ -1,0 +1,2 @@
+CELL_SIZE = 40
+FPS = 60

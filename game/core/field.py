@@ -13,6 +13,7 @@ class Square(Enum):
     BIGDOT = auto()
     DOT = auto()
 
+
 class Fruit(Enum):
 
     ...
@@ -89,8 +90,10 @@ class Field:
 
     def reset(self):
 
-        self.field = STANDARD_FIELD
-
+        self._field = [
+            [Square.EMPTY, Square.EMPTY, Square.EMPTY],
+            [Square.EMPTY, Square.EMPTY, Square.EMPTY],
+        ]
 
     def _check_collisions(self) -> bool:
 
