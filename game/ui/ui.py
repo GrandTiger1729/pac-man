@@ -1,5 +1,6 @@
 from typing import *
 from enum import *
+import random
 
 import pygame
 
@@ -14,9 +15,10 @@ class Environment:
 
     @classmethod
     def get_user_input(cls):
-        pass
+        pygame.event.get()
 
     def update(self):
+        self.get_user_input()
         self.renderer.render(self.field)
 
 
@@ -39,13 +41,28 @@ class Renderer:
         match square:
             case Square.EMPTY:
                 rect = pygame.Rect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
-                pygame.draw.rect(self.screen, (0, 255, 0), rect, 1)
+                # pygame.draw.rect(self.screen, (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), rect, 1)
+                self.screen.fill((255, 0, 0), rect)
+            case Square.DOT:
+                rect = pygame.Rect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                # pygame.draw.rect(self.screen, (0, 0, 255), rect, 1)
+                self.screen.fill((0, 0, 255), rect)
+            case Square.BIGDOT:
+                rect = pygame.Rect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                # pygame.draw.rect(self.screen, (0, 255, 0), rect, 1)
+                self.screen.fill((0, 255, 0), rect)
+            case Square.WALL:
+                rect = pygame.Rect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                pygame.draw.rect(self.screen, (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)), rect, 1)
+            case Square.DOOR:
+                rect = pygame.Rect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                self.screen.fill((255, 255, 0), rect)
             case _:
-                print("???")
+                pass
     
     def render(self, field: Field):
 
-        self.screen.fill((255, 0, 0))
+        self.screen.fill((255, 255, 255))
 
         for i in range(HEIGHT):
             for j in range(WIDTH):

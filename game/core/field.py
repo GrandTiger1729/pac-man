@@ -12,6 +12,8 @@ class Square(Enum):
     WALL = auto()
     BIGDOT = auto()
     DOT = auto()
+    DOOR = auto()
+    BOX = auto()
 
 
 class Fruit(Enum):
@@ -91,9 +93,43 @@ class Field:
     def reset(self):
 
         self._field = [
-            [Square.EMPTY, Square.EMPTY, Square.EMPTY],
-            [Square.EMPTY, Square.EMPTY, Square.EMPTY],
+        #                0,             1,             2,             3,             4,             5,             6,             7,             8,             9,            10,            11,            12,            13,
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.BIGDOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT],
+            [Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  DOOR],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.   BOX, Square.   BOX, Square.   BOX],
+            [Square. EMPTY, Square. EMPTY, Square. EMPTY, Square. EMPTY, Square. EMPTY, Square. EMPTY, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL, Square.   BOX, Square.   BOX, Square.   BOX], # midpoint
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.   BOX, Square.   BOX, Square.   BOX],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.BIGDOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL, Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.   DOT, Square.  WALL],
+            [Square.  WALL, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT, Square.   DOT],
+            [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
         ]
+
+        for i in range(HEIGHT):
+            
+            self._field[i].extend(reversed(self._field[i]))
 
     def _check_collisions(self) -> bool:
 
