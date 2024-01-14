@@ -1,55 +1,8 @@
 from typing import *
 from enum import *
 
-from .config import *
-
-
-class Position:
-    """Represent the position where an item currently in.
-    """
-
-    __slots__ = (
-        "_x",
-        "_y",
-    )
-
-    def __init__(self, x: int, y: int) -> None:
-
-        # Fit into the board
-        self._x: int = max(0, min(x, WIDTH))
-        self._y: int = max(0, min(y, HEIGHT))
-
-    @property
-    def x(self) -> int:
-        return self._x
-    
-    @x.setter
-    def x(self, value) -> None:
-        self._x = max(0, min(value, WIDTH))
-
-    @property
-    def y(self) -> int:
-        return self._y
-    
-    @y.setter
-    def y(self, value) -> None:
-        self._y = max(0, min(value, HEIGHT))
-
-
-class Face(Enum):
-
-    UP = auto()
-    DOWN = auto()
-    LEFT = auto()
-    RIGHT = auto()
-
-class Direction(Enum):
-
-    UP = auto()
-    DOWN = auto()
-    LEFT = auto()
-    RIGHT = auto()
-
+from .types import *
+from ..config import *
 
 class Agent:
 
@@ -71,27 +24,51 @@ class Agent:
     def face(self):
         return self._face
     
-    def move(self, direction: Direction) -> None:
+    def valid_position(self, position: Position, field: List[List[Square]]) -> bool:
+        
+        raise NotImplementedError
+    
+    def check_valid(self, position: Position, field: List[List[Square]]) -> bool:
+        """Check whether the edge of the agent is in a valid cell"""
+        EPS = 1e-6
+        return self.valid_position(Position(position.x, position.y - CELL_SIZE // 2 + EPS), field) and \
+               self.valid_position(Position(position.x, position.y + CELL_SIZE // 2 - EPS), field) and \
+               self.valid_position(Position(position.x - CELL_SIZE // 2 + EPS, position.y), field) and \
+               self.valid_position(Position(position.x + CELL_SIZE // 2 - EPS, position.y), field)
+    
+    def move(self, direction: Direction, field: List[List[Square]]) -> None:
         
         match direction:
 
             case Direction.UP:
-                self._position.y -= 1
-                self._face = Face.UP
+                new_position = Position(self.position.x, self.position.y - VELOCITY)
+                if self.check_valid(new_position, field):
+                    self._position = new_position
+                    self._face = Face.UP
 
             case Direction.DOWN:
-                self._position.y += 1
-                self._face = Face.DOWN
+                new_position = Position(self.position.x, self.position.y + VELOCITY)
+                if self.check_valid(new_position, field):
+                    self._position = new_position
+                    self._face = Face.DOWN
 
             case Direction.LEFT:
-                self._position.x -= 1
-                self._face = Face.LEFT
+                new_position = Position(self.position.x - VELOCITY, self.position.y)
+                if self.check_valid(new_position, field):
+                    self._position = new_position
+                    self._face = Face.LEFT
 
             case Direction.RIGHT:
-                self._position.x += 1
-                self._face = Face.RIGHT
+                new_position = Position(self.position.x + VELOCITY, self.position.y)
+                if self.check_valid(new_position, field):
+                    self._position = new_position
+                    self._face = Face.RIGHT
+
+            case _:
+                pass
+
    
-    
-    def move_to(self, position: Position) -> None:
+    def move_to(self, position: Position, field: List[List[Square]]) -> None:
         
+        assert self.valid_position(position, field)
         self._position = position

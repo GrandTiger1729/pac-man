@@ -1,29 +1,10 @@
 from typing import *
 from enum import *
 
-from .config import *
+from ..config import *
+from .types import *
 from .pacman import PacManUser, PacManAI
 from .ghost import Blinky, Inky, Pinky, Clyde
-
-
-class Square(Enum):
-
-    EMPTY = auto()
-    WALL = auto()
-    BIGDOT = auto()
-    DOT = auto()
-    DOOR = auto()
-    BOX = auto()
-
-
-class Fruit(Enum):
-
-    ...
-
-class Event(Enum):
-
-    NORMAL = auto()
-    REVERSED = auto()
 
 class Field:
 
@@ -58,10 +39,6 @@ class Field:
         return self._live_count
     
     @property
-    def fruits(self) -> List[Fruit]:
-        return self._live_count
-    
-    @property
     def score(self) -> int:
         return self._score
     
@@ -92,6 +69,7 @@ class Field:
 
     def reset(self):
 
+        # build left half side of the field
         self._field = [
         #                0,             1,             2,             3,             4,             5,             6,             7,             8,             9,            10,            11,            12,            13,
             [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
@@ -127,9 +105,19 @@ class Field:
             [Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL, Square.  WALL],
         ]
 
-        for i in range(HEIGHT):
-            
+        # extend to the right hand side because it is bilateral symmetry
+        for i in range(FIELD_HEIGHT):
             self._field[i].extend(reversed(self._field[i]))
+
+        self._event = Event.NORMAL
+        self._live_count = LIVE_COUNT
+        self._score = 0
+        self._pacman_user = PacManUser()
+        self._pacman_ai = PacManAI()
+        self._blinky = Blinky()
+        self._inky = Inky()
+        self._pinky = Pinky()
+        self._clyde = Clyde()
 
     def _check_collisions(self) -> bool:
 
